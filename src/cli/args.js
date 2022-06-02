@@ -1,5 +1,4 @@
 export const parseArgs = () => {
-  console.log(process.argv.slice(2));
   const resultString = process.argv
       .slice(2)
       .reduce((previousValue, currentValue, index, array) => {
