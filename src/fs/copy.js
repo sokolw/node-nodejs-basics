@@ -13,9 +13,9 @@ export const copy = async () => {
 
     for (const file of files) {
       const readStream = (await fs.open(path.join('./', targetFolder, file), 'r'))
-          .createReadStream(path.join('./', targetFolder, file));
+          .createReadStream();
       const writeStream = (await fs.open(path.join('./', distFolder, file), 'w'))
-          .createWriteStream(path.join('./', distFolder, file));
+          .createWriteStream();
       await pipeline(readStream, writeStream);
     }
   } catch (error) {
