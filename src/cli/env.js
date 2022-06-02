@@ -1,3 +1,15 @@
+const prefix = 'RSS_';
+
 export const parseEnv = () => {
-    // Write your code here 
+  const result = [];
+  for (const key in process.env) {
+    if (key.includes(prefix)){
+      result.push(`${key}=${process.env[key]}`);
+    }
+  }
+
+  console.log(result.join('; '));
 };
+
+// cmd, not powershell! -> set RSS_name1=value1&&set RSS_name2=value2&&node env.js
+parseEnv();
