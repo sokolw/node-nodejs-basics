@@ -6,7 +6,7 @@ const workFolder = 'files';
 
 export const read = async () => {
   try {
-    isFileExist();
+    await isFileExist();
     const readFileContent = await (await fs.open(path.join('./', workFolder, targetFileName), 'r'))
         .readFile({ encoding : 'utf-8' });
       console.log(readFileContent);

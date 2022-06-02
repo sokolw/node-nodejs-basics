@@ -5,7 +5,7 @@ const workFolder = 'files';
 
 export const list = async () => {
   try {
-    isFolderExist();
+    await isFolderExist();
     const files = await fs.readdir(path.join('./', workFolder));
     console.log(files);
   } catch (error) {
