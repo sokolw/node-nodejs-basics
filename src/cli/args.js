@@ -3,9 +3,9 @@ export const parseArgs = () => {
       .slice(2)
       .reduce((previousValue, currentValue, index, array) => {
         if (index % 2 === 0) {
-          previousValue += currentValue;
+          previousValue += currentValue.replace(/-/gi, '');
         } else {
-          previousValue += ` is ${currentValue}`;
+          previousValue += ` is ${currentValue.replace(/-/gi, '')}`;
           previousValue += index < array.length - 1 ? ', ' : '';
         }
         return previousValue;
