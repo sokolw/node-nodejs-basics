@@ -1,9 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { getPathFolder } from '../utilities.js'
 
 const fileName = 'fresh.txt';
 const distFolder = 'files';
-const fullPath = path.join('./', distFolder, fileName);
+const fullPath = path.join(getPathFolder(import.meta.url), distFolder, fileName);
 const taskContent = 'I am fresh and young';
 
 export const create = async () => {
@@ -27,4 +28,5 @@ const isFileExist = async () => {
   throw new Error('FS operation failed');
 };
 
-create();
+// call function for test
+await create();
