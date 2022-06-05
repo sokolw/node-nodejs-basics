@@ -1,20 +1,24 @@
 import fs from 'fs/promises';
 import { pipeline } from 'stream/promises';
 import path from 'path';
+import { getPathFolder } from '../utilities.js'
 
 const targetFolder = 'files';
 const distFolder = 'files_copy';
+const folderPath = getPathFolder(import.meta.url);
+const targetPath = path.join(folderPath, targetFolder);
+const distPath = path.join(folderPath, distFolder);
 
 export const copy = async () => {
   try {
     await checkFolders();
-    await fs.mkdir(path.join('./', distFolder));
-    const files = await fs.readdir(targetFolder);
+    await fs.mkdir(distPath);
+    const files = await fs.readdir(targetPath);
 
     for (const file of files) {
-      const readStream = (await fs.open(path.join('./', targetFolder, file), 'r'))
+      const readStream = (await fs.open(path.join(targetPath, file), 'r'))
           .createReadStream();
-      const writeStream = (await fs.open(path.join('./', distFolder, file), 'w'))
+      const writeStream = (await fs.open(path.join(distPath, file), 'w'))
           .createWriteStream();
       await pipeline(readStream, writeStream);
     }
@@ -24,7 +28,7 @@ export const copy = async () => {
 };
 
 const checkFolders = async () => {
-  const files = await fs.readdir(path.join('./'), { withFileTypes : true });
+  const files = await fs.readdir(path.join(folderPath), { withFileTypes : true });
   let tempDirs = [];
 
   for (const file of files) {
@@ -40,4 +44,5 @@ const checkFolders = async () => {
   return null;
 };
 
-copy();
+// call function for test
+await copy();
