@@ -11,5 +11,5 @@ export const parseEnv = () => {
   console.log(result.join('; '));
 };
 
-// cmd, not powershell! -> set RSS_name1=value1&&set RSS_name2=value2&&node env.js
+// call function for test
 parseEnv();

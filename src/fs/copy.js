@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import { pipeline } from 'stream/promises';
 import path from 'path';
-import { getPathFolder } from '../utilities.js'
+import { getPathFolder } from '../utilities.js';
 
 const targetFolder = 'files';
 const distFolder = 'files_copy';

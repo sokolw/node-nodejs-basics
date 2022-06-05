@@ -14,4 +14,5 @@ export const parseArgs = () => {
   console.log(resultString);
 };
 
+// call function for test
 parseArgs();

@@ -1,11 +1,13 @@
 import worker from 'worker_threads';
 import path from 'path';
 import os from 'os';
+import { getPathFolder } from '../utilities.js';
 
 const workerScriptFileName = 'worker.js';
 const ERR = 0;
 const OK = 1;
 const END = 2;
+const scriptFolderPath = getPathFolder(import.meta.url);
 
 export const performCalculations = async () => {
   const workers = [];
@@ -26,7 +28,7 @@ export const performCalculations = async () => {
       }
     });
     
-    workers.push(new worker.Worker(path.join(process.cwd(), workerScriptFileName), 
+    workers.push(new worker.Worker(path.join(scriptFolderPath, workerScriptFileName), 
       { workerData: i + 10 }));
     workers[i].postMessage({ port: port2 }, [port2]);
 
@@ -43,4 +45,5 @@ export const performCalculations = async () => {
   }
 };
 
-performCalculations();
+// call function for test
+await performCalculations();

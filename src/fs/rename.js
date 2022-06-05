@@ -1,16 +1,18 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { getPathFolder } from '../utilities.js';
 
 const targetFileName = 'wrongFilename.txt';
 const distFileName = 'properFilename.md';
 const workFolder = 'files';
+const scriptFolderPath = getPathFolder(import.meta.url);
 
 export const rename = async () => {
   try {
     await isFileExist();
     await fs.rename(
-        path.join('./', workFolder, targetFileName),
-        path.join('./', workFolder, distFileName)
+        path.join(scriptFolderPath, workFolder, targetFileName),
+        path.join(scriptFolderPath, workFolder, distFileName)
     ); 
   } catch (error) {
     console.error(error);
@@ -19,7 +21,7 @@ export const rename = async () => {
 };
 
 const isFileExist = async () => {
-  const files = await fs.readdir(path.join('./', workFolder));
+  const files = await fs.readdir(path.join(scriptFolderPath, workFolder));
 
   if (!files.includes(targetFileName) || files.includes(distFileName)) {
     throw new Error('FS operation failed');
@@ -28,4 +30,5 @@ const isFileExist = async () => {
   return null;
 };
 
-rename();
+// call function for test
+await rename();

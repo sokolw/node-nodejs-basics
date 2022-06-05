@@ -31,4 +31,5 @@ export const transform = async () => {
   await pipeline(process.stdin, reverseTransform, process.stdout);
 };
 
-transform();
+// call function for test
+await transform();

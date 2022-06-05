@@ -1,12 +1,14 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { getPathFolder } from '../utilities.js';
 
 const workFolder = 'files';
+const scriptFolderPath = getPathFolder(import.meta.url);
 
 export const list = async () => {
   try {
     await isFolderExist();
-    const files = await fs.readdir(path.join('./', workFolder));
+    const files = await fs.readdir(path.join(scriptFolderPath, workFolder));
     console.log(files);
   } catch (error) {
     console.error(error);
@@ -14,7 +16,7 @@ export const list = async () => {
 };
 
 const isFolderExist = async () => {
-  const files = await fs.readdir('./');
+  const files = await fs.readdir(scriptFolderPath);
 
   if (!files.includes(workFolder)) {
     throw new Error('FS operation failed');
@@ -23,4 +25,5 @@ const isFolderExist = async () => {
   return null;
 };
 
-list();
+// call function for test
+await list();

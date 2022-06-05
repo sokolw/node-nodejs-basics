@@ -2,8 +2,11 @@ import path from 'path';
 import { release, version } from 'os';
 import { createServer as createServerHttp } from 'http';
 import './files/c.js';
+import { getPathFolder } from '../utilities.js';
+import { fileURLToPath } from 'url';
 
 const random = Math.random();
+const scriptFolderPath = getPathFolder(import.meta.url);
 
 export let unknownObject;
 
@@ -21,8 +24,8 @@ console.log(`Release ${release()}`);
 console.log(`Version ${version()}`);
 console.log(`Path segment separator is "${path.sep}"`);
 
-console.log(`Path to current file is ${process.argv[1]}`);
-console.log(`Path to current directory is ${process.cwd()}`);
+console.log(`Path to current file is ${fileURLToPath(import.meta.url)}`);
+console.log(`Path to current directory is ${scriptFolderPath}`);
 
 export const createMyServer = createServerHttp((_, res) => {
   res.end('Request accepted');
