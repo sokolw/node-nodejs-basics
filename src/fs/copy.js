@@ -5,9 +5,9 @@ import { getPathFolder } from '../utilities.js'
 
 const targetFolder = 'files';
 const distFolder = 'files_copy';
-const folderPath = getPathFolder(import.meta.url);
-const targetPath = path.join(folderPath, targetFolder);
-const distPath = path.join(folderPath, distFolder);
+const scriptFolderPath = getPathFolder(import.meta.url);
+const targetPath = path.join(scriptFolderPath, targetFolder);
+const distPath = path.join(scriptFolderPath, distFolder);
 
 export const copy = async () => {
   try {
@@ -28,7 +28,7 @@ export const copy = async () => {
 };
 
 const checkFolders = async () => {
-  const files = await fs.readdir(path.join(folderPath), { withFileTypes : true });
+  const files = await fs.readdir(path.join(scriptFolderPath), { withFileTypes : true });
   let tempDirs = [];
 
   for (const file of files) {
