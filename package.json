@@ -20,7 +20,7 @@
     "zip:compress": "node src/zip/compress.js",
     "zip:decompress": "node src/zip/decompress.js",
     "wt:main": "node src/wt/main.js",
-    "cp:cp": "node src/cp/cp.js"
+    "cp:cp": "node src/cp/cp.js arg0 arg1 arg2"
   },
   "repository": {
     "type": "git",
