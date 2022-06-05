@@ -15,7 +15,10 @@ class ReverseTransform extends Transform {
       callback(null, data
         .toString()
         .replace(new RegExp(EOL, 'gi'), '')
-        .split('').reverse().join('') + EOL
+        .split('')
+        .reverse()
+        .join('')
+        .concat(EOL)
       );
     }
   };
