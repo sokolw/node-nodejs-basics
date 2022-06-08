@@ -4,46 +4,32 @@ import os from 'os';
 import { getPathFolder } from '../utilities.js';
 
 const workerScriptFileName = 'worker.js';
-const ERR = 0;
-const OK = 1;
-const END = 2;
 const scriptFolderPath = getPathFolder(import.meta.url);
+const countCpus = os.cpus().length;
 
 export const performCalculations = async () => {
+  const taskNumber = 10;
   const workers = [];
-  const status = [];
-  const results = new Array(os.cpus().length);
-
-  for (let i = 0; i < os.cpus().length; i++) {
-    const { port1, port2} = new MessageChannel();
-
-    port1.on('message', (message) => {
-      if (status.length < os.cpus().length - 1) {
-        status.push(OK);
-        results[message.index % 10] = { status : 'resolved', data : message.data };
-      } else {
-        status.push( {OK, END} );
-        results[message.index % 10] = { status : 'resolved', data : message.data };
-        console.dir(results);
-      }
-    });
-    
-    workers.push(new worker.Worker(path.join(scriptFolderPath, workerScriptFileName), 
-      { workerData: i + 10 }));
-    workers[i].postMessage({ port: port2 }, [port2]);
-
-    workers[i].on('error', (err) => {
-      if (status.length < os.cpus().length - 1) {
-        status.push(ERR);
-        results[err.message % 10] = { status : 'error', data : null };
-      } else {
-        status.push( {ERR, END} );
-        results[err.message % 10] = { status : 'error', data : null };
-        console.dir(results);
-      }
-    });
+  for (let i = 0; i < countCpus; i++) {
+    workers.push(
+      new Promise (
+        (resolve, reject) => {
+          // create worker
+          const workerProcess = new worker.Worker(
+            path.join(scriptFolderPath, workerScriptFileName), 
+            { workerData: i + taskNumber }
+          );
+          // add event handlers
+          workerProcess.on('message', (message) => resolve({ status : 'resolved', data : message }));
+          workerProcess.on('error', (err) => reject({ status : 'error', data : null }));
+        }
+      )
+    );
   }
-};
+  // wait all results resolve+reject
+  const result = await Promise.allSettled(workers);
+  console.log(result.map(elem => elem.value ? elem.value : elem.reason));
+}
 
 // call function for test
 await performCalculations();
