@@ -14,19 +14,16 @@ export const performCalculations = async () => {
     workers.push(
       new Promise (
         (resolve, reject) => {
-          // create worker
           const workerProcess = new worker.Worker(
             path.join(scriptFolderPath, workerScriptFileName), 
             { workerData: i + taskNumber }
           );
-          // add event handlers
           workerProcess.on('message', (message) => resolve({ status : 'resolved', data : message }));
           workerProcess.on('error', (err) => reject({ status : 'error', data : null }));
         }
       )
     );
   }
-  // wait all results resolve+reject
   const result = await Promise.allSettled(workers);
   console.log(result.map(elem => elem.value ? elem.value : elem.reason));
 }
