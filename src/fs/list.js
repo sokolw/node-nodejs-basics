@@ -16,13 +16,17 @@ export const list = async () => {
 };
 
 const isFolderExist = async () => {
-  const files = await fs.readdir(scriptFolderPath);
+  try {
+    const files = await fs.readdir(scriptFolderPath);
 
-  if (!files.includes(workFolder)) {
+    if (!files.includes(workFolder)) {
+      throw new Error('FS operation failed');
+    }
+
+    return null;
+  } catch {
     throw new Error('FS operation failed');
   }
-
-  return null;
 };
 
 // call function for test
