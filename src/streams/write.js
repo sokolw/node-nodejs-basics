@@ -11,10 +11,15 @@ export const write = async () => {
     const writeStream = (await fs.open(path.join(scriptFolderPath, workFolder, targetFileName), 'w'))
         .createWriteStream();
 
+    console.log('Enter anything! Exit use Ctrl+C')
     const readSteam = process.stdin;
     readSteam.setEncoding('utf8');
     readSteam.on('data', (chunk) => {
       writeStream.write(chunk);
+    });
+    
+    process.on('SIGINT', () => {
+      console.log('Bye. Bye.')
       process.exit();
     });
 
