@@ -11,23 +11,26 @@ export const rename = async () => {
   try {
     await isFileExist();
     await fs.rename(
-        path.join(scriptFolderPath, workFolder, targetFileName),
-        path.join(scriptFolderPath, workFolder, distFileName)
-    ); 
+      path.join(scriptFolderPath, workFolder, targetFileName),
+      path.join(scriptFolderPath, workFolder, distFileName)
+    );
   } catch (error) {
     console.error(error);
   }
-  
 };
 
 const isFileExist = async () => {
-  const files = await fs.readdir(path.join(scriptFolderPath, workFolder));
+  try {
+    const files = await fs.readdir(path.join(scriptFolderPath, workFolder));
 
-  if (!files.includes(targetFileName) || files.includes(distFileName)) {
+    if (!files.includes(targetFileName) || files.includes(distFileName)) {
+      throw new Error('FS operation failed');
+    }
+
+    return null;
+  } catch {
     throw new Error('FS operation failed');
   }
-
-  return null;
 };
 
 // call function for test
