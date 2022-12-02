@@ -1,6 +1,8 @@
+const uselessArgs = 2;
+
 export const parseArgs = () => {
   const resultString = process.argv
-      .slice(2)
+      .slice(uselessArgs)
       .reduce((previousValue, currentValue, index, array) => {
         if (index % 2 === 0) {
           previousValue += currentValue.replace(/-/gi, '');
