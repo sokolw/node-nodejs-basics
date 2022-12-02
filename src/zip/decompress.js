@@ -5,7 +5,7 @@ import zlib from 'zlib';
 import { getPathFolder } from '../utilities.js';
 
 const targetFileName = 'archive.gz';
-const distFileName = 'fileToCompress.txt';
+const distFileName = 'decompressed.txt';
 const workFolder = 'files';
 const scriptFolderPath = getPathFolder(import.meta.url);
 
