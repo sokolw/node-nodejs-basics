@@ -12,7 +12,7 @@
     "fs:read": "node src/fs/read.js",
     "cli:env": "set RSS_name1=value1&&set RSS_name2=value2&&node src/cli/env.js",
     "cli:args": "node src/cli/args.js --propName value --prop2Name value2",
-    "modules:cjsToEsm": "node src/modules/cjsToEsm.mjs",
+    "modules:esm": "node src/modules/esm.mjs",
     "hash:calcHash": "node src/hash/calcHash.js",
     "streams:read": "node src/streams/read.js",
     "streams:write": "node src/streams/write.js",
