@@ -3,7 +3,7 @@ const prefix = 'RSS_';
 export const parseEnv = () => {
   const result = [];
   for (const key in process.env) {
-    if (new RegExp(`^${prefix}`).test(key)){
+    if (key.startsWith(prefix)){
       result.push(`${key}=${process.env[key]}`);
     }
   }
